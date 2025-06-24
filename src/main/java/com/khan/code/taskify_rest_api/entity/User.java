@@ -2,6 +2,8 @@ package com.khan.code.taskify_rest_api.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,9 +33,11 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
 
@@ -42,6 +46,8 @@ public class User implements UserDetails {
     private List<Authority> authorities;
 
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Todo>  todos;
     // ===== UserDetails interface methods =====
 
     @Override
