@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -35,6 +36,11 @@ public class User implements UserDetails {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_authorities", joinColumns = @JoinColumn(name = "user_id"))
+    private List<Authority> authorities;
+
 
     // ===== UserDetails interface methods =====
 
