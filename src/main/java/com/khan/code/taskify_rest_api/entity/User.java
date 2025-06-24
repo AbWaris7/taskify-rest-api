@@ -47,7 +47,11 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // You can return user roles here later (e.g., ROLE_USER, ROLE_ADMIN)
-        return Collections.emptyList();
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
