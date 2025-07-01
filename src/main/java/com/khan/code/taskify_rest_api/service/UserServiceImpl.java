@@ -1,7 +1,9 @@
 package com.khan.code.taskify_rest_api.service;
 
+import com.khan.code.taskify_rest_api.entity.Authority;
 import com.khan.code.taskify_rest_api.entity.User;
 import com.khan.code.taskify_rest_api.repository.UserRepository;
+import com.khan.code.taskify_rest_api.response.UserResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -20,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getUserInfo() {
+    public UserResponse getUserInfo() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymouseUser")) {
@@ -28,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
         }
 
-        return (User) authentication.getPrincipal();
+          User user = (User) authentication.getPrincipal();
+        return new UserResponse(
+                user.getId(), user.getFirstName() +" " + user.getLastName(), user.getEmail(), user.getAuthorities().stream().map(auth -> (Authority) auth).toList());
+
     }
 }

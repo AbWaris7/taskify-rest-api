@@ -1,6 +1,6 @@
 package com.khan.code.taskify_rest_api.controller;
 
-import com.khan.code.taskify_rest_api.entity.User;
+import com.khan.code.taskify_rest_api.response.UserResponse;
 import com.khan.code.taskify_rest_api.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public User getUserInfo() {
+    public UserResponse getUserInfo() {
 
         return userService.getUserInfo();
     }
